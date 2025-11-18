@@ -1,10 +1,5 @@
-import base64
 from cryptography.hazmat.primitives.asymmetric import x25519, ed25519
 from cryptography.hazmat.primitives import serialization
-
-def pem_base64(pem_bytes):
-    """Convert PEM bytes to Base64 (compact single-line string)."""
-    return base64.b64encode(pem_bytes).decode("utf-8")
 
 def priv_pem(key):
     return key.private_bytes(
@@ -37,18 +32,27 @@ set2_ed_pub = set2_ed_priv.public_key()
 # 🟦 Hawcx side configuration (sends its priv + customer's pub)
 # ---------------------------------------------------------------------
 print("### Hawcx Side Keys ###\n")
-print(f"IDP_ED25519_PRIVATE_KEY_PEM: {pem_base64(priv_pem(set1_ed_priv))}")
-print(f"IDP_X25519_PRIVATE_KEY_PEM: {pem_base64(priv_pem(set1_x_priv))}")
-print(f"SP_ED25519_PUBLIC_KEY_PEM: {pem_base64(pub_pem(set2_ed_pub))}")
-print(f"SP_X25519_PUBLIC_KEY_PEM: {pem_base64(pub_pem(set2_x_pub))}\n")
+print("IDP_ED25519_PRIVATE_KEY_PEM:")
+print(priv_pem(set1_ed_priv).decode("utf-8"))
+print("IDP_X25519_PRIVATE_KEY_PEM:")
+print(priv_pem(set1_x_priv).decode("utf-8"))
+print("SP_ED25519_PUBLIC_KEY_PEM:")
+print(pub_pem(set2_ed_pub).decode("utf-8"))
+print("SP_X25519_PUBLIC_KEY_PEM:")
+print(pub_pem(set2_x_pub).decode("utf-8"))
+print()
 
 # ---------------------------------------------------------------------
 # 🟩 Customer side configuration (sends its priv + Hawcx’s pub)
 # ---------------------------------------------------------------------
 print("### Customer Side Keys ###\n")
-print(f"SP_X25519_PRIVATE_KEY_PEM: {pem_base64(priv_pem(set2_x_priv))}")
-print(f"IDP_X25519_PUBLIC_KEY_PEM: {pem_base64(pub_pem(set1_x_pub))}")
-print(f"IDP_ED25519_PUBLIC_KEY_PEM: {pem_base64(pub_pem(set1_ed_pub))}")
-print(f"SP_ED25519_PRIVATE_KEY_PEM: {pem_base64(priv_pem(set2_ed_priv))}")
+print("SP_X25519_PRIVATE_KEY_PEM:")
+print(priv_pem(set2_x_priv).decode("utf-8"))
+print("IDP_X25519_PUBLIC_KEY_PEM:")
+print(pub_pem(set1_x_pub).decode("utf-8"))
+print("IDP_ED25519_PUBLIC_KEY_PEM:")
+print(pub_pem(set1_ed_pub).decode("utf-8"))
+print("SP_ED25519_PRIVATE_KEY_PEM:")
+print(priv_pem(set2_ed_priv).decode("utf-8"))
 
 
